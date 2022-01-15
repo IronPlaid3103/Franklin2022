@@ -21,10 +21,13 @@ public class Drive_Train extends SubsystemBase {
   private final DifferentialDrive _drive = new DifferentialDrive(_fLMotor, _fRMotor); 
 
   public Drive_Train() {  
+    _fLMotor.restoreFactoryDefaults();
+    _fRMotor.restoreFactoryDefaults();
+    _bLMotor.restoreFactoryDefaults();
+    _bRMotor.restoreFactoryDefaults();
+
     _fLMotor.setInverted(true);
-    _fRMotor.setInverted(false);
     _bLMotor.setInverted(true);
-    _bRMotor.setInverted(false);
 
     _bLMotor.follow(_fLMotor);
     _bRMotor.follow(_fRMotor);
