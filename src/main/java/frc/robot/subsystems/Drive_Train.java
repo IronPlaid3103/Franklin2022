@@ -20,17 +20,22 @@ public class Drive_Train extends SubsystemBase {
 
   private final DifferentialDrive _drive = new DifferentialDrive(_fLMotor, _fRMotor); 
 
-  public Drive_Train() {
+  public Drive_Train() {  
+    _fLMotor.setInverted(true);
+    _fRMotor.setInverted(false);
+    _bLMotor.setInverted(true);
+    _bRMotor.setInverted(false);
+
     _bLMotor.follow(_fLMotor);
     _bRMotor.follow(_fRMotor);
   }
 
-  public void teleopDrive(final Joystick driveControl) {
-    final double forward = driveControl.getRawAxis(1);
-    double turn = driveControl.getRawAxis(2); 
-    turn = turn*-1;
+  public void teleopDrive(Joystick driveControl) {
+    double forward = driveControl.getRawAxis(1);
+    double turn = driveControl.getRawAxis(4); 
 
-    _drive.curvatureDrive(forward, turn, Math.abs(forward) <= .1);
+    //_drive.curvatureDrive(forward, turn, Math.abs(forward) <= .1);
+    _drive.arcadeDrive(forward, -turn);
   }
   @Override
   public void periodic() {
