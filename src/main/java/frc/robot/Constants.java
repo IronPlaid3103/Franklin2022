@@ -76,46 +76,15 @@ public final class Constants {
         public static final int RIGHT_STICK_BUTTON = 10;
     }
 
-    // public static final class IntakeConstants {
-    //     public static final int intakeMotor = 5;
-    //     public static final double defaultPower = 0.5;
-    // }
+    public static final class IntakeConstants {
+        public static final int intakeMotor = 5;
+        public static final double defaultPower = 0.5;
+        public static final int actuatorMotor = 6;
+    }
 
-    // public static final class HopperConstants {
-    //     public static final int hopperMotor = 6;
-    //     public static final double defaultPower = 0.5;
-    //     public static final int hopperFeederMotor = 9;
-    //     public static final double defaultFeederIdle = -0.02;
-    //     public static final double defaultFeederPower = -0.25;
-    // }
-
-    // public static final class ShooterConstants {
-    //     public static final int shooterMotor1 = 7;
-    //     public static final int shooterMotor2 = 8;
-    //     public static double greenVelocity = 1500;
-    //     public static double yellowVelocity = 3000;
-    //     public static double blueVelocity = 4500;
-    //     public static double redVelocity = 6000;
-
-    //     public static final double defaultkP = 0;
-    //     public static final double defaultkF = 0.0445;
-
-    //     public static final int kPIDLoopIdx = 0;
-    //     public static final int kTimeoutMs = 30;
-    //     public static final Gains kGains_Velocit  = new Gains(0.1, 0.001, 5, 1023.0/20660.0,  300,  1.00);
-    // }
-
-    // public static final class FieldConstants {
-    //     public static final double targetHeight = 98.25;    //this might be 81.25 if measured to the bottom of the vision target
-    // }
-
-    // public static final class LimelightConstants {
-    //     public static final double mountingHeight = 23;     //TODO: this is a rough estimation using CAD - either calculate this better or use real-world measurement
-    //     public static final double mountingAngle = 26.5;    //this is the angle at which the Limelight mounting plate sits on the shooter assembly   
-    //     public static final double aimingTolerance = 0.2;
-    //     public static final double kP = 0.02;
-    //     public static final double kI = 0;
-    //     public static final double kD = 0;
-    //     public static final double kF = 0.025;
-    // }
+    public static final class ClimberConstants {
+        public static final int climberMotor = 5;
+        public static final int climberSolenoid = 6;
+        public static final double climberMotorPower = 0.5;
+    }
 }

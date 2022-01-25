@@ -7,8 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.subsystems.Drive_Train;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import frc.robot.util.Settings;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -22,6 +25,8 @@ public class RobotContainer {
 
   private final Drive_Train _drive_Train = new Drive_Train();
   private final Joystick _driver = new Joystick(0);
+  private final Intake _intake = new Intake(); 
+  private final Climber _climber = new Climber();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -45,4 +50,23 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
 
+  public Command getAutonomousCommand() {
+    return null;
+  }
+
+  public void loadSettings(){
+    _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.defaultPower));
+    _climber.setMotorPower(Settings.loadDouble("Climber", "MotorPower", ClimberConstants.climberMotorPower));
+    // _drive_Train.setksVolts(Settings.loadDouble("DriveTrain", "ksVolts", Constants.DrivetrainConstants.ksVolts));
+    // _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kvVoltSecondsPerMeter", Constants.DrivetrainConstants.kvVoltSecondsPerMeter));
+    // _drive_Train.setkaVoltSecondsSquaredPerMeter(Settings.loadDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", Constants.DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
+  }  
+
+  public void saveSettings(){
+    Settings.saveDouble("Intake", "Power", _intake.getPower());
+    Settings.saveDouble("Climber", "MotorPower", _climber.getMotorPower());
+    // Settings.saveDouble("DriveTrain", "ksVolts", _drive_Train.getksVolts());
+    // Settings.saveDouble("DriveTrain", "kvVoltsSecondsPerMeter", _drive_Train.getkvVoltSecondsPerMeter());
+    // Settings.saveDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", _drive_Train.getkaVoltSecondsSquaredPerMeter());
+  }
 }
