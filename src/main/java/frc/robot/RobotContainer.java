@@ -13,6 +13,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.Settings;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -42,7 +43,16 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    new JoystickButton(_driver, Constants.JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intake));
+    new JoystickButton(_driver, Constants.JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intake));
+    new JoystickButton(_driver, Constants.JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
+    new JoystickButton(_driver, Constants.JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
+    new JoystickButton(_driver, Constants.JoystickConstants.A).whileHeld(new ClimberMotorDown(_climber));
+    new JoystickButton(_driver, Constants.JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
+    new JoystickButton(_driver, Constants.JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
+    new JoystickButton(_driver, Constants.JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

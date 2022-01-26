@@ -7,10 +7,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class ActuateOut extends CommandBase {
+public class IntakeActuateOut extends CommandBase {
   private final Intake _intake;
   /** Creates a new ActuateOut. */
-  public ActuateOut(Intake intake) {
+  public IntakeActuateOut(Intake intake) {
     _intake = intake;
 
     // Use addRequirements() here to declare subsystem dependencies.

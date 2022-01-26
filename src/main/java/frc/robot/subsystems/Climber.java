@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
@@ -20,21 +21,27 @@ public class Climber extends SubsystemBase {
   private double motorPower = Constants.ClimberConstants.climberMotorPower;
 
   /** Creates a new Climber. */
-  public Climber() {}
+  public Climber() {
+    setDefaultCommand(new RunCommand(this::stop, this));
+  }
 
-  public void _climberMotorUp() {
+  public void stop() {
+    _climberMotor.stopMotor();
+  }
+
+  public void climberMotorUp() {
     _climberMotor.set(motorPower);
   }
 
-  public void _climberMotorDown() {
+  public void climberMotorDown() {
     _climberMotor.set(-motorPower);
   }
 
-  public void _climberSolenoidBack() {
+  public void climberSolenoidBack() {
     _climberSolenoid.set(true);
   }
 
-  public void _climberSolenoidForward() {
+  public void climberSolenoidForward() {
     _climberSolenoid.set(false); 
   }
 
