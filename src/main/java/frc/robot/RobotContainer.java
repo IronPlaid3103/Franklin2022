@@ -4,8 +4,11 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -24,8 +27,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final Drive_Train _drive_Train = new Drive_Train();
+  private final AHRS _gyro = new AHRS(SPI.Port.kMXP);
+  private final Drive_Train _drive_Train = new Drive_Train(_gyro);
   private final Joystick _driver = new Joystick(0);
+  private final Joystick _operator = new Joystick(1);
   private final Intake _intake = new Intake(); 
   private final Climber _climber = new Climber();
   
@@ -52,6 +57,15 @@ public class RobotContainer {
     new JoystickButton(_driver, Constants.JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
     new JoystickButton(_driver, Constants.JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
     new JoystickButton(_driver, Constants.JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
+
+    new JoystickButton(_operator, Constants.JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intake));
+    new JoystickButton(_operator, Constants.JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intake));
+    new JoystickButton(_operator, Constants.JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
+    new JoystickButton(_operator, Constants.JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
+    new JoystickButton(_operator, Constants.JoystickConstants.A).whileHeld(new ClimberMotorDown(_climber));
+    new JoystickButton(_operator, Constants.JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
+    new JoystickButton(_operator, Constants.JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
+    new JoystickButton(_operator, Constants.JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
   }
 
   /**
