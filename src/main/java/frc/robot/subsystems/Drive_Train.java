@@ -37,6 +37,10 @@ public class Drive_Train extends SubsystemBase {
 
   private Pose2d _pose;
 
+  private double _ksVolts = DrivetrainConstants.ksVolts;
+  private double _kvVoltSecondsPerMeter = DrivetrainConstants.kvVoltSecondsPerMeter;
+  private double _kaVoltSecondsSquaredPerMeter = DrivetrainConstants.kaVoltSecondsSquaredPerMeter;
+
   public Drive_Train(AHRS gyro) {  
 
     _gyro = gyro;
@@ -121,4 +125,27 @@ public class Drive_Train extends SubsystemBase {
     _bLMotor.setVoltage(leftVolts);
   }
 
+  public double getkaVoltSecondsSquaredPerMeter() {
+    return _kaVoltSecondsSquaredPerMeter;
+  }
+
+  public double getkvVoltSecondsPerMeter() {
+    return _kvVoltSecondsPerMeter;
+  }
+
+  public double getksVolts(){
+    return _ksVolts;
+  }
+
+  public void setkaVoltSecondsSquaredPerMeter(double kaVoltSecondsSquaredPerMeter) {
+    _kaVoltSecondsSquaredPerMeter = kaVoltSecondsSquaredPerMeter;
+  }
+
+  public void setkvVoltSecondsPerMeter(double kvVoltSecondsPerMeter) {
+    _kvVoltSecondsPerMeter = kvVoltSecondsPerMeter;
+  }
+
+  public void setksVolts(double ksVolts){
+    _ksVolts = ksVolts;
+  }
 }
