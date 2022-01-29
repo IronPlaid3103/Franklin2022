@@ -16,7 +16,7 @@ import frc.robot.util.Settings;
 
 public class Intake extends SubsystemBase {
   private final CANSparkMax _intakeMotor = new CANSparkMax(Constants.IntakeConstants.intakeMotor, MotorType.kBrushless);
-  private final Solenoid _actuator = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.actuatorMotor);
+  private final Solenoid _actuator = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.actuatorSolenoid);
 
   private double _power = Constants.IntakeConstants.defaultPower;
 

@@ -78,12 +78,12 @@ public final class Constants {
     public static final class IntakeConstants {
         public static final int intakeMotor = 5;
         public static final double defaultPower = 0.5;
-        public static final int actuatorMotor = 6;
+        public static final int actuatorSolenoid = 1;
     }
 
     public static final class ClimberConstants {
-        public static final int climberMotor = 5;
-        public static final int climberSolenoid = 6;
+        public static final int climberMotor = 6;
+        public static final int climberSolenoid = 2;
         public static final double climberMotorPower = 0.5;
     }
 }
