@@ -10,11 +10,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.Settings;
+import frc.robot.util.TrajectoryCache;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -33,6 +36,8 @@ public class RobotContainer {
   private final Joystick _operator = new Joystick(1);
   private final Intake _intake = new Intake(); 
   private final Climber _climber = new Climber();
+
+  private SendableChooser<String> _pathChooser = new SendableChooser<String>(); 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -40,6 +45,27 @@ public class RobotContainer {
     configureButtonBindings();
 
     _drive_Train.setDefaultCommand(new ArcadeDrive(_drive_Train, _driver)); 
+    
+    loadPathChooser();
+  }  
+
+  private void loadPathChooser() {
+    TrajectoryCache.clear();
+    _pathChooser = new SendableChooser<>();
+
+    //cacheTrajectory("GS A Red", "Paths/output/GS_A--Red.wpilib.json");
+
+    cacheTrajectory("Test-Straight", "Paths/output/test-straight.wpilib.json");
+    cacheTrajectory("Test-Turn", "Paths/output/test-turn.wpilib.json");
+    
+    //_pathChooser.addOption("Test-Group", "Test-Group");
+
+    SmartDashboard.putData("Path Chooser", _pathChooser);
+  }
+
+  private void cacheTrajectory(String key, String trajectoryJson) {
+    _pathChooser.addOption(key, key);
+    TrajectoryCache.add(key, trajectoryJson);
   }
 
   /**
@@ -75,7 +101,10 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-    return null;
+
+    String path = _pathChooser.getSelected();
+
+    return new AutonIntake(_drive_Train, _intake, path);
   }
 
   public void loadSettings(){

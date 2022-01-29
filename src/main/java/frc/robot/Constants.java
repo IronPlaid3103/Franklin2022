@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -24,14 +25,14 @@ public final class Constants {
         
         public static final double deadband = 0.1;
 
-        // public static final double ksVolts = 0.146;//0.292
-        // public static final double kvVoltSecondsPerMeter = 2.675;//0.2.85
-        // public static final double kaVoltSecondsSquaredPerMeter = 0.2049;//0.0537
+        public static final double ksVolts = 0.146;//0.292
+        public static final double kvVoltSecondsPerMeter = 2.675;//0.2.85
+        public static final double kaVoltSecondsSquaredPerMeter = 0.2049;//0.0537
 
-        // public static final double kTrackwidthMeters = Units.inchesToMeters(24);
-        // public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+        public static final double kTrackwidthMeters = Units.inchesToMeters(24);
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        // public static final double kPDriveVel = 0;//2.05;
+        public static final double kPDriveVel = 0;//2.05;
 
         public static final double rampRate = 0.5;
 		public static final double kDistancePerWheelRevolutionMeters = Units.inchesToMeters(Math.PI * 6.0);//0.47877872
@@ -39,14 +40,14 @@ public final class Constants {
         
     }
 
-    // public static final class AutoConstants{
+    public static final class AutoConstants{
 
-	// 	public static final double kMaxSpeedMetersPerSecond = 0;
-	// 	public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+		public static final double kMaxSpeedMetersPerSecond = 0;
+		public static final double kMaxAccelerationMetersPerSecondSquared = 0;
 
-    //     public static final double kRamseteB = 2;
-    //     public static final double kRamseteZeta = 0.7;
-    // }
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+    }
 
     public static final class JoystickConstants {
         //Controllers
