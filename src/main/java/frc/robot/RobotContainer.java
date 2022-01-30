@@ -57,7 +57,7 @@ public class RobotContainer {
     //cacheTrajectory("GS A Red", "Paths/output/GS_A--Red.wpilib.json");
 
     cacheTrajectory("Test-Straight", "Paths/output/test-straight.wpilib.json");
-    cacheTrajectory("Test-Turn", "Paths/output/test-turn.wpilib.json");
+    cacheTrajectory("Test-CurveLeft", "Paths/output/test-curveleft.wpilib.json");
     
     //_pathChooser.addOption("Test-Group", "Test-Group");
 
@@ -76,6 +76,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    //OPERATOR
     new JoystickButton(_driver, Constants.JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intake));
     new JoystickButton(_driver, Constants.JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intake));
     new JoystickButton(_driver, Constants.JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
@@ -85,6 +86,8 @@ public class RobotContainer {
     new JoystickButton(_driver, Constants.JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
     new JoystickButton(_driver, Constants.JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
 
+    //DRIVER
+    // *** All of these buttons are for ease of testing during development - recommend commenting out before competition build and deploy ***
     new JoystickButton(_operator, Constants.JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intake));
     new JoystickButton(_operator, Constants.JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intake));
     new JoystickButton(_operator, Constants.JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
@@ -102,14 +105,12 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-
     String path = _pathChooser.getSelected();
-
     return new AutonIntake(_drive_Train, _intake, path);
   }
 
   public void loadSettings(){
-    _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.defaultPower));
+    _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.intakeMotorPower));
     _climber.setMotorPower(Settings.loadDouble("Climber", "MotorPower", ClimberConstants.climberMotorPower));
     _drive_Train.setksVolts(Settings.loadDouble("DriveTrain", "ksVolts", DrivetrainConstants.ksVolts));
     _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kvVoltSecondsPerMeter", DrivetrainConstants.kvVoltSecondsPerMeter));

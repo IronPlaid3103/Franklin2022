@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase {
   private final CANSparkMax _intakeMotor = new CANSparkMax(Constants.IntakeConstants.intakeMotor, MotorType.kBrushless);
   private final Solenoid _actuator = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.IntakeConstants.actuatorSolenoid);
 
-  private double _power = Constants.IntakeConstants.defaultPower;
+  private double _power = Constants.IntakeConstants.intakeMotorPower;
 
   /** Creates a new Intake. */
   public Intake() {
@@ -56,6 +56,6 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    _power = Settings.getLiveDouble("Intake", "Power", Constants.IntakeConstants.defaultPower);
+    _power = Settings.getLiveDouble("Intake", "Power", Constants.IntakeConstants.intakeMotorPower);
   }
 }
