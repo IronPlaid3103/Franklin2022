@@ -105,14 +105,13 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-
     String path = _pathChooser.getSelected();
 
     return new AutonDrivePath(_drive_Train, path);
   }
 
   public void loadSettings(){
-    _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.defaultPower));
+    _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.intakeMotorPower));
     _climber.setMotorPower(Settings.loadDouble("Climber", "MotorPower", ClimberConstants.climberMotorPower));
     _drive_Train.setksVolts(Settings.loadDouble("DriveTrain", "ksVolts", DrivetrainConstants.ksVolts));
     _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kvVoltSecondsPerMeter", DrivetrainConstants.kvVoltSecondsPerMeter));
