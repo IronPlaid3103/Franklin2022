@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.Settings;
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final Joystick _operator = new Joystick(1);
   private final Intake _intake = new Intake(); 
   private final Climber _climber = new Climber();
+  private final IntakeActuator _intakeActuator = new IntakeActuator();
 
   private SendableChooser<String> _pathChooser = new SendableChooser<String>(); 
   
@@ -56,8 +58,8 @@ public class RobotContainer {
 
     //cacheTrajectory("GS A Red", "Paths/output/GS_A--Red.wpilib.json");
 
-    cacheTrajectory("Test-Straight", "Paths/output/test-straight.wpilib.json");
-    cacheTrajectory("Test-Turn", "Paths/output/test-turn.wpilib.json");
+    cacheTrajectory("Test-Straight", "paths/output/test-straight.wpilib.json");
+    cacheTrajectory("Test-CurveLeft", "paths/output/test-curveleft.wpilib.json");
     
     //_pathChooser.addOption("Test-Group", "Test-Group");
 
@@ -76,23 +78,24 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(_driver, Constants.JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intake));
-    new JoystickButton(_driver, Constants.JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intake));
-    new JoystickButton(_driver, Constants.JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
-    new JoystickButton(_driver, Constants.JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
-    new JoystickButton(_driver, Constants.JoystickConstants.A).whileHeld(new ClimberMotorDown(_climber));
-    new JoystickButton(_driver, Constants.JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
-    new JoystickButton(_driver, Constants.JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
-    new JoystickButton(_driver, Constants.JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
+    new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intakeActuator));
+    new JoystickButton(_driver, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intakeActuator));
+    new JoystickButton(_driver, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
+    new JoystickButton(_driver, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
+    new JoystickButton(_driver, JoystickConstants.A).whileHeld(new ClimberMotorDown(_climber));
+    new JoystickButton(_driver, JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
+    new JoystickButton(_driver, JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
+   // new JoystickButton(_driver, JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
+    new JoystickButton(_driver, JoystickConstants.B).whenPressed(new AutonDrivePath(_drive_Train, "Test-Straight"));
 
-    new JoystickButton(_operator, Constants.JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intake));
-    new JoystickButton(_operator, Constants.JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intake));
-    new JoystickButton(_operator, Constants.JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
-    new JoystickButton(_operator, Constants.JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
-    new JoystickButton(_operator, Constants.JoystickConstants.A).whileHeld(new ClimberMotorDown(_climber));
-    new JoystickButton(_operator, Constants.JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
-    new JoystickButton(_operator, Constants.JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
-    new JoystickButton(_operator, Constants.JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
+    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intakeActuator));
+    new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intakeActuator));
+    new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
+    new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
+    new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberMotorDown(_climber));
+    new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
+    new JoystickButton(_operator, JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
+    new JoystickButton(_operator, JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
   }
 
   /**
@@ -105,7 +108,7 @@ public class RobotContainer {
 
     String path = _pathChooser.getSelected();
 
-    return new AutonIntake(_drive_Train, _intake, path);
+    return new AutonDrivePath(_drive_Train, path);
   }
 
   public void loadSettings(){

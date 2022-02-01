@@ -30,8 +30,8 @@ public class Drive_Train extends SubsystemBase {
 
   private AHRS _gyro;
 
-  private RelativeEncoder _left_follower;
-  private RelativeEncoder _right_follower;
+  private RelativeEncoder _leftEncoder;
+  private RelativeEncoder _rightEncoder;
 
   private DifferentialDriveOdometry _odometry;
 
@@ -59,11 +59,11 @@ public class Drive_Train extends SubsystemBase {
 
     enableOpenLoopRampRate(true);
 
-    _left_follower = _fLMotor.getEncoder();
-    _right_follower = _fRMotor.getEncoder();
+    _leftEncoder = _fLMotor.getEncoder();
+    _rightEncoder = _fRMotor.getEncoder();
 
-    _left_follower.setPositionConversionFactor(DrivetrainConstants.kDistancePerWheelRevolutionMeters / DrivetrainConstants.kGearReduction);
-    _right_follower.setPositionConversionFactor(DrivetrainConstants.kDistancePerWheelRevolutionMeters / DrivetrainConstants.kGearReduction);
+    _leftEncoder.setPositionConversionFactor(DrivetrainConstants.kDistancePerWheelRevolutionMeters / DrivetrainConstants.kGearReduction);
+    _rightEncoder.setPositionConversionFactor(DrivetrainConstants.kDistancePerWheelRevolutionMeters / DrivetrainConstants.kGearReduction);
 
     encoderReset();
     
@@ -97,12 +97,12 @@ public class Drive_Train extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     
-    _pose = _odometry.update(_gyro.getRotation2d(), _left_follower.getPosition(), _right_follower.getPosition());
+    _pose = _odometry.update(_gyro.getRotation2d(), -_leftEncoder.getPosition(), -_rightEncoder.getPosition());
   }
 
   public void encoderReset() {
-    _right_follower.setPosition(0.0);
-    _left_follower.setPosition(0.0);
+    _rightEncoder.setPosition(0.0);
+    _leftEncoder.setPosition(0.0);
   }
 
   public Pose2d getPose() {
@@ -110,7 +110,7 @@ public class Drive_Train extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(_left_follower.getVelocity() / 60, _right_follower.getVelocity() / 60);
+    return new DifferentialDriveWheelSpeeds(_leftEncoder.getVelocity() / 60, _rightEncoder.getVelocity() / 60);
   }
 
   public void resetOdometry(Pose2d pose) {
@@ -119,10 +119,10 @@ public class Drive_Train extends SubsystemBase {
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    _fLMotor.setVoltage(leftVolts);
+    _fLMotor.setVoltage(-leftVolts);
     _fRMotor.setVoltage(-rightVolts);
     _bRMotor.setVoltage(-rightVolts);
-    _bLMotor.setVoltage(leftVolts);
+    _bLMotor.setVoltage(-leftVolts);
   }
 
   public double getkaVoltSecondsSquaredPerMeter() {

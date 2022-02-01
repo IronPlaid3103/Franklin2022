@@ -5,16 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeActuator;
 
 public class IntakeActuateOut extends CommandBase {
-  private final Intake _intake;
+  private final IntakeActuator _intakeActuator;
   /** Creates a new ActuateOut. */
-  public IntakeActuateOut(Intake intake) {
-    _intake = intake;
+  public IntakeActuateOut(IntakeActuator intakeActuator) {
+    _intakeActuator = intakeActuator;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(_intake);
+    addRequirements(_intakeActuator);
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +24,7 @@ public class IntakeActuateOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    _intake.actuateOut();
+    _intakeActuator.actuateOut();
   }
 
   // Called once the command ends or is interrupted.
@@ -34,6 +34,6 @@ public class IntakeActuateOut extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return _intakeActuator.isActuated();
   }
 }
