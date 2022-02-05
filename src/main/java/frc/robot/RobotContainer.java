@@ -58,8 +58,13 @@ public class RobotContainer {
 
     //cacheTrajectory("GS A Red", "Paths/output/GS_A--Red.wpilib.json");
 
-    cacheTrajectory("Test-Straight", "paths/output/test-straight.wpilib.json");
-    cacheTrajectory("Test-CurveLeft", "paths/output/test-curveleft.wpilib.json");
+    //cacheTrajectory("Test-Straight", "paths/output/test-straight.wpilib.json");
+    //cacheTrajectory("Test-CurveLeft", "paths/output/test-curveleft.wpilib.json");
+
+    cacheTrajectory("Left", "paths/output/left.wpilib.json");
+    cacheTrajectory("Middle", "paths/output/middle.wpilib.json");
+    cacheTrajectory("Right", "paths/output/right.wpilib.json");
+    cacheTrajectory("Middle -> Left", "paths/output/middle_then_left.wpilib.json");
     
     //_pathChooser.addOption("Test-Group", "Test-Group");
 
