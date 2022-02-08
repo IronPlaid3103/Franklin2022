@@ -41,7 +41,7 @@ public class TrajectoryCache {
      */
     public static void addPathPlanner(String key, String name) {
         try {
-            cache.put(key, PathPlanner.loadPath(name, 8, 5));
+            cache.put(key, PathPlanner.loadPath(name, 1, 1));
         } catch (Exception ex) {
             DriverStation.reportError("Unable to open trajectory (PathPlanner): " + name, ex.getStackTrace());
         }

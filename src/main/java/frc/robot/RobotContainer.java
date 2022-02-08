@@ -20,6 +20,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.Settings;
 import frc.robot.util.TrajectoryCache;
+import frc.robot.util.TrajectoryCache.PATHTYPE;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -66,6 +67,11 @@ public class RobotContainer {
     cacheTrajectory("Right", "paths/output/right.wpilib.json");
     cacheTrajectory("Middle -> Left", "paths/output/middle_then_left.wpilib.json");
     
+    _pathChooser.addOption("Path Planner Middle", "middle");
+    TrajectoryCache.addPathPlanner("Path Planner Middle", "middle");
+    _pathChooser.addOption("Path Planner left", "left");
+    TrajectoryCache.addPathPlanner("Path Planner left", "left");
+    
     //_pathChooser.addOption("Test-Group", "Test-Group");
 
     SmartDashboard.putData("Path Chooser", _pathChooser);
@@ -73,7 +79,7 @@ public class RobotContainer {
 
   private void cacheTrajectory(String key, String trajectoryJson) {
     _pathChooser.addOption(key, key);
-    TrajectoryCache.add(key, trajectoryJson);
+    TrajectoryCache.addPathWeaver(key, trajectoryJson);
   }
 
   /**
