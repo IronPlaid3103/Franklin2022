@@ -5,7 +5,7 @@
   "gearing denominator": 1.0,
   "gearing numerator": 10.75,
   "gyro": "NavX",
-  "gyro ctor": "SPI.kMXP",
+  "gyro ctor": "SPI (MXP)",
   "is drivetrain": true,
   "motor controllers": [
     "SPARK MAX (Brushless)"
@@ -20,7 +20,7 @@
     1
   ],
   "primary motors inverted": [
-    true
+    false
   ],
   "secondary encoder inverted": false,
   "secondary encoder ports": [
@@ -31,7 +31,7 @@
     2
   ],
   "secondary motors inverted": [
-    false
+    true
   ],
   "velocity measurement period": 100
 }

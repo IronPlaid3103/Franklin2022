@@ -66,11 +66,14 @@ public class RobotContainer {
     cacheTrajectory("Middle", "paths/output/middle.wpilib.json");
     cacheTrajectory("Right", "paths/output/right.wpilib.json");
     cacheTrajectory("Middle -> Left", "paths/output/middle_then_left.wpilib.json");
+    cacheTrajectory("Test-Straight", "pathplanner/generatedJSON/test-straight.wpilib.json");
     
     _pathChooser.addOption("Path Planner Middle", "middle");
     TrajectoryCache.addPathPlanner("Path Planner Middle", "middle");
     _pathChooser.addOption("Path Planner left", "left");
     TrajectoryCache.addPathPlanner("Path Planner left", "left");
+    _pathChooser.addOption("Path Planner test straight", "Test-Straight");
+    TrajectoryCache.addPathPlanner("Path Planner test straight", "Test-Straight");
     
     //_pathChooser.addOption("Test-Group", "Test-Group");
 
