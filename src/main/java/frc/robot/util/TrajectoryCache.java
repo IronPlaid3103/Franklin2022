@@ -34,19 +34,30 @@ public class TrajectoryCache {
     }
 
     /**
-     * Loads and caches a PathPlanner-based trajectory
+     * Loads and caches a PathPlanner-based trajectory (assumes a max velocity of 1 m/s and max acceleration of 1 m/s^s)
      *
      * @param key a unique key for this trajectory
      * @param name the name of the .path file without the extension (unlike PathWeaver, only include the name, not the full path to the file)
      */
     public static void addPathPlanner(String key, String name) {
+       addPathPlanner(key, name, 1, 1);
+    }
+
+    /**
+     * Loads and caches a PathPlanner-based trajectory
+     *
+     * @param key a unique key for this trajectory
+     * @param name the name of the .path file without the extension (unlike PathWeaver, only include the name, not the full path to the file)
+     * @param maxVel maximum velocity (m/s)
+     * @param maxAccel maximum acceleration (m/s^2)
+     */
+    public static void addPathPlanner(String key, String name, double maxVel, double maxAccel) {
         try {
-            cache.put(key, PathPlanner.loadPath(name, 1, 1));
+            cache.put(key, PathPlanner.loadPath(name, maxVel, maxAccel));
         } catch (Exception ex) {
             DriverStation.reportError("Unable to open trajectory (PathPlanner): " + name, ex.getStackTrace());
         }
     }
-
 
     /**
      * Loads and caches a trajectory (currently supports PathWeaver or PathPlanner)

@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
@@ -48,7 +49,9 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    _drive_Train.setDefaultCommand(new ArcadeDrive(_drive_Train, _driver)); 
+    _drive_Train.setDefaultCommand(new ArcadeDrive(_drive_Train, _driver));
+
+    DriverStation.silenceJoystickConnectionWarning(true);
     
     loadPathChooser();
   }  
@@ -81,8 +84,15 @@ public class RobotContainer {
   }
 
   private void cacheTrajectory(String key, String trajectoryJson) {
+    cacheTrajectory(key, trajectoryJson, PATHTYPE.PathWeaver);
+  }
+
+  private void cacheTrajectory(String key, String value, PATHTYPE type) {
     _pathChooser.addOption(key, key);
-    TrajectoryCache.addPathWeaver(key, trajectoryJson);
+    if(type == PATHTYPE.PathWeaver)
+      TrajectoryCache.addPathWeaver(key, value);
+    else if(type == PATHTYPE.PathPlanner)
+      TrajectoryCache.addPathPlanner(key, value, 1, 1);
   }
 
   /**
