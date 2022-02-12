@@ -4,18 +4,21 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberArm;
 
-public class ClimberSolenoidBack extends CommandBase {
-  private final Climber _climber;
-
-  /** Creates a new ClimberSolenoidBack. */
-  public ClimberSolenoidBack(Climber climber) {
-    _climber = climber;
-
+public class ClimberArmDance extends CommandBase {
+  private final ClimberArm _climberArm;
+  private final Joystick _joystick; 
+  
+  /** Creates a new ClimberArmDance. */
+  public ClimberArmDance(ClimberArm climberArm, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(_climber);
+    _climberArm = climberArm;
+    _joystick = joystick;
+
+    addRequirements(climberArm);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +28,7 @@ public class ClimberSolenoidBack extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    _climber.climberSolenoidBack();
+    _climberArm.go(_joystick);
   }
 
   // Called once the command ends or is interrupted.

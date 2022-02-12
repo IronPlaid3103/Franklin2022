@@ -5,17 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberHooks;
 
-public class ClimberSolenoidForward extends CommandBase {
-  private final Climber _climber;
-  
-  /** Creates a new ClimberSolenoidForward. */
-  public ClimberSolenoidForward(Climber climber) {
+public class ClimberHooksBack extends CommandBase {
+  private final ClimberHooks _climber;
+
+  /** Creates a new ClimberSolenoidBack. */
+  public ClimberHooksBack(ClimberHooks climber) {
     _climber = climber;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(_climber); 
+    addRequirements(_climber);
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +25,7 @@ public class ClimberSolenoidForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    _climber.climberSolenoidForward();
+    _climber.back();
   }
 
   // Called once the command ends or is interrupted.

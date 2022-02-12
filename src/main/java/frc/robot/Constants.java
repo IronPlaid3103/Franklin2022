@@ -23,20 +23,18 @@ public final class Constants {
         public static final int rearLeftMotor = 3;
         public static final int rearRightMotor = 4;  
         
-        public static final double deadband = 0.1;
+        public static final double ksVolts = 0.17863;
+        public static final double kvVoltSecondsPerMeter = 5.7007;
+        public static final double kaVoltSecondsSquaredPerMeter = 2.828;
 
-        public static final double ksVolts = 0.146; //0.292
-        public static final double kvVoltSecondsPerMeter = 2.675; //0.2.85
-        public static final double kaVoltSecondsSquaredPerMeter = 0.2049; //0.0537
-
-        public static final double kTrackwidthMeters = Units.inchesToMeters(24);
+        public static final double kTrackwidthMeters = 0.45396;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        public static final double kPDriveVel = 0; //2.05;
+        public static final double kPDriveVel = 1.6232;
 
         public static final double rampRate = 0.5;
 		public static final double kDistancePerWheelRevolutionMeters = Units.inchesToMeters(Math.PI * 6.0); //0.47877872
-        public static final double kGearReduction = 10.75;  //gear ratio for the Toughbox Mini that comes with AM14U5 6-wheel drop center KOP chassis
+        public static final double kGearReduction = 10.71;  //gear ratio for the Toughbox Mini that comes with AM14U5 6-wheel drop center KOP chassis
     }
 
     public static final class AutoConstants{
@@ -59,6 +57,8 @@ public final class Constants {
         public static final int RIGHT_TRIGGER = 3;
         public static final int RIGHT_STICK_X = 4;
         public static final int RIGHT_STICK_Y = 5;
+
+        public static final double deadband = 0.1;
         
         //XboxOne Buttons
         public static final int A = 1;
@@ -81,7 +81,7 @@ public final class Constants {
 
     public static final class ClimberConstants {
         public static final int climberMotor = 6;
-        public static final double climberMotorPower = 0.5;
+        public static final double climberArmPower = 0.5;
         public static final int climberSolenoid = 2;
     }
 }

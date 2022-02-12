@@ -87,10 +87,10 @@ public class Drive_Train extends SubsystemBase {
   }
 
   private double applyDeadband(double value) {
-    if(Math.abs(value) < DrivetrainConstants.deadband)
+    if(Math.abs(value) < JoystickConstants.deadband)
       return 0.0;
     else
-      return (value - Math.copySign(.1, value)) / (1 - DrivetrainConstants.deadband);
+      return (value - Math.copySign(.1, value)) / (1 - JoystickConstants.deadband);
   }
   
   @Override
@@ -115,6 +115,7 @@ public class Drive_Train extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     encoderReset();
+    _gyro.reset();
     _odometry.resetPosition(pose, _gyro.getRotation2d());
   }
 

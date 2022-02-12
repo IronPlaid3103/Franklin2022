@@ -39,7 +39,8 @@ public class RobotContainer {
   private final Joystick _driver = new Joystick(0);
   private final Joystick _operator = new Joystick(1);
   private final Intake _intake = new Intake(); 
-  private final Climber _climber = new Climber();
+  private final ClimberHooks _climberHooks = new ClimberHooks();
+  private final ClimberArm _climberArm = new ClimberArm();
   private final IntakeActuator _intakeActuator = new IntakeActuator();
 
   private SendableChooser<String> _pathChooser = new SendableChooser<String>(); 
@@ -50,6 +51,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     _drive_Train.setDefaultCommand(new ArcadeDrive(_drive_Train, _driver));
+    _climberArm.setDefaultCommand(new ClimberArmDance(_climberArm, _operator));
 
     DriverStation.silenceJoystickConnectionWarning(true);
     
@@ -76,10 +78,6 @@ public class RobotContainer {
     SmartDashboard.putData("Path Chooser", _pathChooser);
   }
 
-  private void cacheTrajectory(String key, String trajectoryJson) {
-    cacheTrajectory(key, trajectoryJson, PATHTYPE.PathWeaver);
-  }
-
   private void cacheTrajectory(String key, String value, PATHTYPE type) {
     _pathChooser.addOption(key, key);
     if(type == PATHTYPE.PathWeaver)
@@ -99,9 +97,9 @@ public class RobotContainer {
     new JoystickButton(_driver, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intakeActuator));
     new JoystickButton(_driver, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
     new JoystickButton(_driver, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
-    new JoystickButton(_driver, JoystickConstants.A).whileHeld(new ClimberMotorDown(_climber));
-    new JoystickButton(_driver, JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
-    new JoystickButton(_driver, JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
+    new JoystickButton(_driver, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
+    new JoystickButton(_driver, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
+    new JoystickButton(_driver, JoystickConstants.X).whileHeld(new ClimberHooksForward(_climberHooks));
    // new JoystickButton(_driver, JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
     new JoystickButton(_driver, JoystickConstants.B).whenPressed(new AutonDrivePath(_drive_Train, "Test-Straight"));
 
@@ -109,10 +107,10 @@ public class RobotContainer {
     new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intakeActuator));
     new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
     new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
-    new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberMotorDown(_climber));
-    new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberMotorUp(_climber));
-    new JoystickButton(_operator, JoystickConstants.X).whileHeld(new ClimberSolenoidForward(_climber));
-    new JoystickButton(_operator, JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
+    new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
+    new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
+    new JoystickButton(_operator, JoystickConstants.X).whileHeld(new ClimberHooksForward(_climberHooks));
+    new JoystickButton(_operator, JoystickConstants.B).whileHeld(new ClimberHooksBack(_climberHooks));
   }
 
   /**
@@ -129,7 +127,7 @@ public class RobotContainer {
 
   public void loadSettings(){
     _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.intakeMotorPower));
-    _climber.setMotorPower(Settings.loadDouble("Climber", "MotorPower", ClimberConstants.climberMotorPower));
+    _climberArm.setPower(Settings.loadDouble("ClimberArm", "Power", ClimberConstants.climberArmPower));
     _drive_Train.setksVolts(Settings.loadDouble("DriveTrain", "ksVolts", DrivetrainConstants.ksVolts));
     _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kvVoltSecondsPerMeter", DrivetrainConstants.kvVoltSecondsPerMeter));
     _drive_Train.setkaVoltSecondsSquaredPerMeter(Settings.loadDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
@@ -137,7 +135,7 @@ public class RobotContainer {
 
   public void saveSettings(){
     Settings.saveDouble("Intake", "Power", _intake.getPower());
-    Settings.saveDouble("Climber", "MotorPower", _climber.getMotorPower());
+    Settings.saveDouble("ClimberArm", "Power", _climberArm.getPower());
     Settings.saveDouble("DriveTrain", "ksVolts", _drive_Train.getksVolts());
     Settings.saveDouble("DriveTrain", "kvVoltsSecondsPerMeter", _drive_Train.getkvVoltSecondsPerMeter());
     Settings.saveDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", _drive_Train.getkaVoltSecondsSquaredPerMeter());
