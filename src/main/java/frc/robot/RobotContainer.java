@@ -60,25 +60,18 @@ public class RobotContainer {
     TrajectoryCache.clear();
     _pathChooser = new SendableChooser<>();
 
-    //cacheTrajectory("GS A Red", "Paths/output/GS_A--Red.wpilib.json");
-
-    //cacheTrajectory("Test-Straight", "paths/output/test-straight.wpilib.json");
-    //cacheTrajectory("Test-CurveLeft", "paths/output/test-curveleft.wpilib.json");
-
-    cacheTrajectory("Left", "paths/output/left.wpilib.json");
-    cacheTrajectory("Middle", "paths/output/middle.wpilib.json");
-    cacheTrajectory("Right", "paths/output/right.wpilib.json");
-    cacheTrajectory("Middle -> Left", "paths/output/middle_then_left.wpilib.json");
-    cacheTrajectory("Test-Straight", "pathplanner/generatedJSON/test-straight.wpilib.json");
+    // cacheTrajectory("Left", "paths/output/left.wpilib.json");
+    // cacheTrajectory("Middle", "paths/output/middle.wpilib.json");
+    // cacheTrajectory("Right", "paths/output/right.wpilib.json");
+    // cacheTrajectory("Middle -> Left", "paths/output/middle_then_left.wpilib.json");
     
-    _pathChooser.addOption("Path Planner Middle", "Path Planner Middle");
-    TrajectoryCache.addPathPlanner("Path Planner Middle", "middle");
-    _pathChooser.addOption("Path Planner left", "Path Planner left");
-    TrajectoryCache.addPathPlanner("Path Planner left", "left");
-    _pathChooser.addOption("Path Planner test straight", "Path Planner test straight");
-    TrajectoryCache.addPathPlanner("Path Planner test straight", "Test-Straight");
-    
-    //_pathChooser.addOption("Test-Group", "Test-Group");
+    cacheTrajectory("Middle", "middle", PATHTYPE.PathPlanner);
+    cacheTrajectory("Left", "left", PATHTYPE.PathPlanner);    
+    cacheTrajectory("Right", "right", PATHTYPE.PathPlanner);
+    cacheTrajectory("Middle then Left", "middle then left", PATHTYPE.PathPlanner);
+    cacheTrajectory("Middle then Right", "middle then right", PATHTYPE.PathPlanner);
+    cacheTrajectory("Right then Middle", "right then middle", PATHTYPE.PathPlanner);
+    cacheTrajectory("Test Straight", "test-straight", PATHTYPE.PathPlanner);
 
     SmartDashboard.putData("Path Chooser", _pathChooser);
   }
