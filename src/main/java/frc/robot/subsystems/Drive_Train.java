@@ -68,6 +68,11 @@ public class Drive_Train extends SubsystemBase {
     encoderReset();
     
     _odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), new Pose2d(0.0, 0.0, new Rotation2d(0.0)));
+
+    _bLMotor.burnFlash();
+    _bRMotor.burnFlash();
+    _fLMotor.burnFlash();
+    _fRMotor.burnFlash();
   }
 
   public void enableOpenLoopRampRate(boolean enable) {

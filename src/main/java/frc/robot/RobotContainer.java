@@ -23,6 +23,7 @@ import frc.robot.util.Settings;
 import frc.robot.util.TrajectoryCache;
 import frc.robot.util.TrajectoryCache.PATHTYPE;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -93,24 +94,22 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intakeActuator));
-    new JoystickButton(_driver, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intakeActuator));
+    new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new IntakeActuateOut(_intakeActuator));
+    new JoystickButton(_driver, JoystickConstants.LOGO_LEFT).whenPressed(new IntakeActuateIn(_intakeActuator));
     new JoystickButton(_driver, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
     new JoystickButton(_driver, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
-    new JoystickButton(_driver, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
-    new JoystickButton(_driver, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
-    new JoystickButton(_driver, JoystickConstants.X).whileHeld(new ClimberHooksForward(_climberHooks));
-   // new JoystickButton(_driver, JoystickConstants.B).whileHeld(new ClimberSolenoidBack(_climber));
-    new JoystickButton(_driver, JoystickConstants.B).whenPressed(new AutonDrivePath(_drive_Train, "Test-Straight"));
-
-    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whileHeld(new IntakeActuateOut(_intakeActuator));
-    new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeActuateIn(_intakeActuator));
+    new JoystickButton(_driver, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
+    new JoystickButton(_driver, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
+    
+    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whenPressed(new IntakeActuateOut(_intakeActuator));
+    new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whenPressed(new IntakeActuateIn(_intakeActuator));
     new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
     new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
-    new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
-    new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
-    new JoystickButton(_operator, JoystickConstants.X).whileHeld(new ClimberHooksForward(_climberHooks));
-    new JoystickButton(_operator, JoystickConstants.B).whileHeld(new ClimberHooksBack(_climberHooks));
+   // new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
+   // new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
+    new JoystickButton(_operator, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
+    new JoystickButton(_operator, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
+    new JoystickButton(_operator, JoystickConstants.LEFT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::toggleSoftLimit, _climberArm));
   }
 
   /**

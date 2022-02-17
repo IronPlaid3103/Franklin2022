@@ -13,13 +13,17 @@ import frc.robot.Constants;
 import frc.robot.util.Settings;
 
 public class Intake extends SubsystemBase {
-  private final CANSparkMax _intakeMotor = new CANSparkMax(Constants.IntakeConstants.intakeMotor, MotorType.kBrushless);
+  private final CANSparkMax _intakeMotor = new CANSparkMax(Constants.IntakeConstants.intakeMotor, MotorType.kBrushed);
 
   private double _power = Constants.IntakeConstants.intakeMotorPower;
 
   /** Creates a new Intake. */
   public Intake() {
     setDefaultCommand(new RunCommand(this::stop, this));
+
+    _intakeMotor.restoreFactoryDefaults();
+
+    _intakeMotor.burnFlash();
   }
 
   public void stop() {

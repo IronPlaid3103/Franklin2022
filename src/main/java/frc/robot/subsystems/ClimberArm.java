@@ -5,9 +5,13 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
@@ -17,10 +21,33 @@ import frc.robot.util.Settings;
 public class ClimberArm extends SubsystemBase {
   private final CANSparkMax _climberMotor = new CANSparkMax(ClimberConstants.climberMotor, MotorType.kBrushless);
   private double _motorPower = ClimberConstants.climberArmPower;
+  private RelativeEncoder _encoder = _climberMotor.getEncoder();
+  private boolean _softLimitEnabled = false;
   
   /** Creates a new ClimberArms. */
   public ClimberArm() {
     setDefaultCommand(new RunCommand(this::stop, this));
+
+    _climberMotor.restoreFactoryDefaults();
+
+    _climberMotor.setIdleMode(IdleMode.kBrake);
+
+    toggleSoftLimit(); 
+
+    _encoder.setPosition(0); 
+
+    _climberMotor.burnFlash();
+  }
+
+  public void toggleSoftLimit() {
+    _softLimitEnabled = !_softLimitEnabled;
+
+    _climberMotor.enableSoftLimit(SoftLimitDirection.kForward, _softLimitEnabled);
+    _climberMotor.setSoftLimit(SoftLimitDirection.kForward, ClimberConstants.FORWARD_LIMIT);
+    _climberMotor.enableSoftLimit(SoftLimitDirection.kReverse, _softLimitEnabled);
+    _climberMotor.setSoftLimit(SoftLimitDirection.kReverse, ClimberConstants.REVERSE_LIMIT);
+
+    SmartDashboard.putBoolean("Soft Limit Enabled", _softLimitEnabled);
   }
 
   public void go(Joystick operatorControl) {
