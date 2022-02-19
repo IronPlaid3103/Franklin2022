@@ -15,6 +15,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.JoystickConstants;
@@ -27,6 +29,8 @@ public class Drive_Train extends SubsystemBase {
   private final CANSparkMax _bRMotor = new CANSparkMax(DrivetrainConstants.rearRightMotor, MotorType.kBrushless);
 
   private final DifferentialDrive _drive = new DifferentialDrive(_fLMotor, _fRMotor); 
+
+  public final Field2d Field = new Field2d();
 
   private AHRS _gyro;
 
@@ -69,10 +73,12 @@ public class Drive_Train extends SubsystemBase {
     
     _odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), new Pose2d(0.0, 0.0, new Rotation2d(0.0)));
 
-    _bLMotor.burnFlash();
-    _bRMotor.burnFlash();
-    _fLMotor.burnFlash();
-    _fRMotor.burnFlash();
+     _bLMotor.burnFlash();
+     _bRMotor.burnFlash();
+     _fLMotor.burnFlash();
+     _fRMotor.burnFlash();
+
+   SmartDashboard.putData("Field", Field);
   }
 
   public void enableOpenLoopRampRate(boolean enable) {
@@ -103,6 +109,8 @@ public class Drive_Train extends SubsystemBase {
     // This method will be called once per scheduler run
     
     _pose = _odometry.update(_gyro.getRotation2d(), -_leftEncoder.getPosition(), -_rightEncoder.getPosition());
+
+    Field.setRobotPose(_odometry.getPoseMeters());
   }
 
   public void encoderReset() {

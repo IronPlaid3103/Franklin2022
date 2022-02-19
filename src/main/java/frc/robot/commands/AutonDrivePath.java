@@ -63,6 +63,8 @@ public class AutonDrivePath extends CommandBase {
 
     _drivetrain.resetOdometry(trajectory.getInitialPose());
 
+    _drivetrain.Field.getObject("traj").setTrajectory(trajectory);
+
     return ramseteCommand;
   }
 

@@ -75,6 +75,7 @@ public class RobotContainer {
     cacheTrajectory("Middle then Right", "middle then right", PATHTYPE.PathPlanner);
     cacheTrajectory("Right then Middle", "right then middle", PATHTYPE.PathPlanner);
     cacheTrajectory("Test Straight", "test-straight", PATHTYPE.PathPlanner);
+    cacheTrajectory("Another Test", "another-test", PATHTYPE.PathPlanner);
 
     SmartDashboard.putData("Path Chooser", _pathChooser);
   }

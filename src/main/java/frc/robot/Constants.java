@@ -23,14 +23,14 @@ public final class Constants {
         public static final int rearLeftMotor = 3;
         public static final int rearRightMotor = 4;  
         
-        public static final double ksVolts = 0.17863;
-        public static final double kvVoltSecondsPerMeter = 5.7007;
-        public static final double kaVoltSecondsSquaredPerMeter = 2.828;
+        public static final double ksVolts = 0.146; //0.17863;
+        public static final double kvVoltSecondsPerMeter = 2.675; //5.7007;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.2049; //2.828;
 
         public static final double kTrackwidthMeters = 0.45396;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        public static final double kPDriveVel = 1.6232;
+        public static final double kPDriveVel = 0; //1.6232
 
         public static final double rampRate = 0.5;
 		public static final double kDistancePerWheelRevolutionMeters = Units.inchesToMeters(Math.PI * 6.0); //0.47877872
