@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.util.Settings;
 
 public class Drive_Train extends SubsystemBase {
   
@@ -44,6 +45,7 @@ public class Drive_Train extends SubsystemBase {
   private double _ksVolts = DrivetrainConstants.ksVolts;
   private double _kvVoltSecondsPerMeter = DrivetrainConstants.kvVoltSecondsPerMeter;
   private double _kaVoltSecondsSquaredPerMeter = DrivetrainConstants.kaVoltSecondsSquaredPerMeter;
+  private double _kPDriveVel = DrivetrainConstants.kPDriveVel; 
 
   public Drive_Train(AHRS gyro) {  
 
@@ -111,6 +113,11 @@ public class Drive_Train extends SubsystemBase {
     _pose = _odometry.update(_gyro.getRotation2d(), -_leftEncoder.getPosition(), -_rightEncoder.getPosition());
 
     Field.setRobotPose(_odometry.getPoseMeters());
+
+    setksVolts(Settings.getLiveDouble("DriveTrain", "ksVolts", DrivetrainConstants.ksVolts));
+    setkvVoltSecondsPerMeter(Settings.getLiveDouble("DriveTrain", "kvVoltSecondsPerMeter", DrivetrainConstants.kvVoltSecondsPerMeter));
+    setkaVoltSecondsSquaredPerMeter(Settings.getLiveDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
+    setkPDriveVel(Settings.loadDouble("DriveTrain", "kPDriveVel", DrivetrainConstants.kPDriveVel));
   }
 
   public void encoderReset() {
@@ -149,6 +156,14 @@ public class Drive_Train extends SubsystemBase {
 
   public double getksVolts(){
     return _ksVolts;
+  }
+
+  public double getkPDriveVel() {
+    return _kPDriveVel;
+  }
+
+  public void setkPDriveVel(double kPDriveVel) {
+    _kPDriveVel = kPDriveVel; 
   }
 
   public void setkaVoltSecondsSquaredPerMeter(double kaVoltSecondsSquaredPerMeter) {

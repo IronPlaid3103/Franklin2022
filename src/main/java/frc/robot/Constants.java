@@ -75,7 +75,7 @@ public final class Constants {
 
     public static final class IntakeConstants {
         public static final int intakeMotor = 5;
-        public static final double intakeMotorPower = 0.5;
+        public static final double intakeMotorPower = 1;
         public static final int actuatorSolenoid = 1;
     }
 

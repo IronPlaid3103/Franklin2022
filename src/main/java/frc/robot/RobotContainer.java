@@ -131,6 +131,7 @@ public class RobotContainer {
     _drive_Train.setksVolts(Settings.loadDouble("DriveTrain", "ksVolts", DrivetrainConstants.ksVolts));
     _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kvVoltSecondsPerMeter", DrivetrainConstants.kvVoltSecondsPerMeter));
     _drive_Train.setkaVoltSecondsSquaredPerMeter(Settings.loadDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
+    _drive_Train.setkPDriveVel(Settings.loadDouble("DriveTrain", "kPDriveVel", DrivetrainConstants.kPDriveVel));
   }  
 
   public void saveSettings(){
@@ -139,5 +140,6 @@ public class RobotContainer {
     Settings.saveDouble("DriveTrain", "ksVolts", _drive_Train.getksVolts());
     Settings.saveDouble("DriveTrain", "kvVoltsSecondsPerMeter", _drive_Train.getkvVoltSecondsPerMeter());
     Settings.saveDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", _drive_Train.getkaVoltSecondsSquaredPerMeter());
+    Settings.saveDouble("DriveTrain", "kPDriveVel", _drive_Train.getkPDriveVel()); 
   }
 }

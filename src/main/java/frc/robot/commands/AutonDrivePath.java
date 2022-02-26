@@ -53,12 +53,12 @@ public class AutonDrivePath extends CommandBase {
         trajectory,
         _drivetrain::getPose,
         new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
-        new SimpleMotorFeedforward(DrivetrainConstants.ksVolts,
-            DrivetrainConstants.kvVoltSecondsPerMeter,
-            DrivetrainConstants.kaVoltSecondsSquaredPerMeter),
+        new SimpleMotorFeedforward(_drivetrain.getksVolts(),
+            _drivetrain.getkvVoltSecondsPerMeter(),
+            _drivetrain.getkaVoltSecondsSquaredPerMeter()),
         DrivetrainConstants.kDriveKinematics, _drivetrain::getWheelSpeeds,
-        new PIDController(DrivetrainConstants.kPDriveVel, 0, 0),
-        new PIDController(DrivetrainConstants.kPDriveVel, 0, 0),
+        new PIDController(_drivetrain.getkPDriveVel(), 0, 0),
+        new PIDController(_drivetrain.getkPDriveVel(), 0, 0),
         _drivetrain::tankDriveVolts, _drivetrain);
 
     _drivetrain.resetOdometry(trajectory.getInitialPose());
