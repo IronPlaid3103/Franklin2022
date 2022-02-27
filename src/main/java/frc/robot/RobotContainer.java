@@ -111,6 +111,7 @@ public class RobotContainer {
     new JoystickButton(_operator, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
     new JoystickButton(_operator, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
     new JoystickButton(_operator, JoystickConstants.LEFT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::toggleSoftLimit, _climberArm));
+    new JoystickButton(_operator, JoystickConstants.RIGHT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::encoderReset, _climberArm));
   }
 
   /**

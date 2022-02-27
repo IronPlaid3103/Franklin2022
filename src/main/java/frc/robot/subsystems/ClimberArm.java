@@ -34,7 +34,7 @@ public class ClimberArm extends SubsystemBase {
 
     toggleSoftLimit(); 
 
-    _encoder.setPosition(0); 
+    encoderReset();
 
     _climberMotor.burnFlash();
   }
@@ -48,6 +48,10 @@ public class ClimberArm extends SubsystemBase {
     _climberMotor.setSoftLimit(SoftLimitDirection.kReverse, ClimberConstants.REVERSE_LIMIT);
 
     SmartDashboard.putBoolean("Soft Limit Enabled", _softLimitEnabled);
+  }
+
+  public void encoderReset() {
+    _encoder.setPosition(0.0);
   }
 
   public void go(Joystick operatorControl) {
