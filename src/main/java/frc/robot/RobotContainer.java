@@ -102,10 +102,10 @@ public class RobotContainer {
     new JoystickButton(_driver, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
     new JoystickButton(_driver, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
     
-    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whenPressed(new IntakeActuateOut(_intakeActuator));
-    new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whenPressed(new IntakeActuateIn(_intakeActuator));
-    new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
-    new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
+    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whileHeld(new VomitCargo(_intake, _intakeActuator));
+    new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeOut(_intake));
+    new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeCargo(_intake, _intakeActuator));
+    new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeIn(_intake));
    // new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
    // new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
     new JoystickButton(_operator, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));

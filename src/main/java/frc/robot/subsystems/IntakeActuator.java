@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
@@ -13,7 +14,9 @@ public class IntakeActuator extends SubsystemBase {
   private final Solenoid _actuator = new Solenoid(PneumaticsModuleType.CTREPCM, IntakeConstants.actuatorSolenoid);
   
   /** Creates a new IntakeActuator. */
-  public IntakeActuator() {}
+  public IntakeActuator() {
+    setDefaultCommand(new RunCommand(this::actuateIn, this));
+  }
 
   public void actuateIn() {
     _actuator.set(false);

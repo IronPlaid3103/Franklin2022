@@ -35,7 +35,6 @@ public class ClimberArmDown extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //TODO: add limit switch
-    return false;
+    return _climberArm.isDown();
   }
 }
