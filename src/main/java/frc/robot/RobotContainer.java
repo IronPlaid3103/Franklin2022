@@ -21,6 +21,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.Settings;
 import frc.robot.util.TrajectoryCache;
+import frc.robot.util.XboxPOV;
 import frc.robot.util.TrajectoryCache.PATHTYPE;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -36,14 +37,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final AHRS _gyro = new AHRS(SPI.Port.kMXP);
-  private final Drive_Train _drive_Train = new Drive_Train(_gyro);
+  public final LEDStrip led = new LEDStrip(28, 0);
+  private final Drive_Train _drive_Train = new Drive_Train(_gyro, led);
   private final Joystick _driver = new Joystick(0);
   private final Joystick _operator = new Joystick(1);
   private final Intake _intake = new Intake(); 
   private final ClimberHooks _climberHooks = new ClimberHooks();
   private final ClimberArm _climberArm = new ClimberArm();
   private final IntakeActuator _intakeActuator = new IntakeActuator();
-
   private SendableChooser<String> _pathChooser = new SendableChooser<String>(); 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -102,16 +103,19 @@ public class RobotContainer {
     new JoystickButton(_driver, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
     new JoystickButton(_driver, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
     
-    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whileHeld(new VomitCargo(_intake, _intakeActuator));
-    new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeOut(_intake));
     new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeCargo(_intake, _intakeActuator));
+    new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whenReleased(new IntakeActuateIn(_intakeActuator));
     new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeIn(_intake));
+    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whileHeld(new VomitCargo(_intake, _intakeActuator));
+    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whenReleased(new IntakeActuateIn(_intakeActuator));
+    new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeOut(_intake));
    // new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
    // new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
     new JoystickButton(_operator, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
     new JoystickButton(_operator, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
     new JoystickButton(_operator, JoystickConstants.LEFT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::toggleSoftLimit, _climberArm));
     new JoystickButton(_operator, JoystickConstants.RIGHT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::encoderReset, _climberArm));
+    new XboxPOV(_operator).whenPressed(new IntakeActuateOut(_intakeActuator));
   }
 
   /**

@@ -27,7 +27,7 @@ public class ClimberAutoClimb extends SequentialCommandGroup {
         )
       ),
       new ParallelCommandGroup(
-        new ClimberArmDown(climberArm),
+        new ClimberArmDownToPosition(climberArm, -150),
         new SequentialCommandGroup(
           new WaitCommand(1),
           new ClimberHooksBack(climberHooks)

@@ -15,7 +15,8 @@ public class IntakeActuator extends SubsystemBase {
   
   /** Creates a new IntakeActuator. */
   public IntakeActuator() {
-    setDefaultCommand(new RunCommand(this::actuateIn, this));
+    //setDefaultCommand(new RunCommand(this::actuateIn, this));
+    //don't set default command here so that we can actuate out on a button press during climbing
   }
 
   public void actuateIn() {

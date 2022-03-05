@@ -17,9 +17,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.subsystems.LEDStrip.LED_MODE;
 import frc.robot.util.Settings;
 
 public class Drive_Train extends SubsystemBase {
@@ -35,6 +37,8 @@ public class Drive_Train extends SubsystemBase {
 
   private AHRS _gyro;
 
+  private LEDStrip _led;
+
   private RelativeEncoder _leftEncoder;
   private RelativeEncoder _rightEncoder;
 
@@ -47,11 +51,13 @@ public class Drive_Train extends SubsystemBase {
   private double _kaVoltSecondsSquaredPerMeter = DrivetrainConstants.kaVoltSecondsSquaredPerMeter;
   private double _kPDriveVel = DrivetrainConstants.kPDriveVel; 
 
-  public Drive_Train(AHRS gyro) {  
+  public Drive_Train(AHRS gyro, LEDStrip led) {  
 
     _gyro = gyro;
     _gyro.reset();
     
+    _led = led;
+
     _fLMotor.restoreFactoryDefaults();
     _fRMotor.restoreFactoryDefaults();
     _bLMotor.restoreFactoryDefaults();
@@ -118,6 +124,15 @@ public class Drive_Train extends SubsystemBase {
     setkvVoltSecondsPerMeter(Settings.getLiveDouble("DriveTrain", "kvVoltSecondsPerMeter", DrivetrainConstants.kvVoltSecondsPerMeter));
     setkaVoltSecondsSquaredPerMeter(Settings.getLiveDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
     setkPDriveVel(Settings.loadDouble("DriveTrain", "kPDriveVel", DrivetrainConstants.kPDriveVel));
+
+    boolean isFlat = (Math.abs(_gyro.getRoll()) <= 5);
+    if (!isFlat) {
+      _led.setColor(Color.kDarkBlue);
+    } else {
+      _led.setMode(LED_MODE.Plaid);
+    }
+
+    SmartDashboard.putBoolean("Flat", isFlat);
   }
 
   public void encoderReset() {

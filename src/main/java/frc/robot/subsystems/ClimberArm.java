@@ -26,8 +26,6 @@ public class ClimberArm extends SubsystemBase {
   
   /** Creates a new ClimberArms. */
   public ClimberArm() {
-    setDefaultCommand(new RunCommand(this::stop, this));
-
     _climberMotor.restoreFactoryDefaults();
 
     _climberMotor.setIdleMode(IdleMode.kBrake);
@@ -47,7 +45,7 @@ public class ClimberArm extends SubsystemBase {
     _climberMotor.enableSoftLimit(SoftLimitDirection.kReverse, _softLimitEnabled);
     _climberMotor.setSoftLimit(SoftLimitDirection.kReverse, ClimberConstants.REVERSE_LIMIT);
 
-    SmartDashboard.putBoolean("Soft Limit Enabled", _softLimitEnabled);
+    SmartDashboard.putBoolean("Soft Limit", _softLimitEnabled);
   }
 
   public void encoderReset() {
@@ -101,5 +99,9 @@ public class ClimberArm extends SubsystemBase {
 
   public boolean isUp() {
     return (_encoder.getPosition() <= ClimberConstants.REVERSE_LIMIT);
+  }
+
+  public boolean isAtPosition(double position) {
+    return (Math.abs(_encoder.getPosition() - position) < 5);
   }
 }
