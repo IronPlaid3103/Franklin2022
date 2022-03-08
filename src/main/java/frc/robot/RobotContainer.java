@@ -46,6 +46,7 @@ public class RobotContainer {
   private final ClimberArm _climberArm = new ClimberArm();
   private final IntakeActuator _intakeActuator = new IntakeActuator();
   private SendableChooser<String> _pathChooser = new SendableChooser<String>(); 
+  private final Camera _camera = new Camera(); 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -102,7 +103,8 @@ public class RobotContainer {
     new JoystickButton(_driver, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
     new JoystickButton(_driver, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
     new JoystickButton(_driver, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
-    
+    new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new InstantCommand(_camera::toggleCamera, _camera)); 
+
     new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeCargo(_intake, _intakeActuator));
     new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whenReleased(new IntakeActuateIn(_intakeActuator));
     new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeIn(_intake));
