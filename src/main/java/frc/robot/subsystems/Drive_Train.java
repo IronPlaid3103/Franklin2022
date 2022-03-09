@@ -120,10 +120,10 @@ public class Drive_Train extends SubsystemBase {
 
     Field.setRobotPose(_odometry.getPoseMeters());
 
-    setksVolts(Settings.getLiveDouble("DriveTrain", "ksVolts", DrivetrainConstants.ksVolts));
-    setkvVoltSecondsPerMeter(Settings.getLiveDouble("DriveTrain", "kvVoltSecondsPerMeter", DrivetrainConstants.kvVoltSecondsPerMeter));
-    setkaVoltSecondsSquaredPerMeter(Settings.getLiveDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
-    setkPDriveVel(Settings.loadDouble("DriveTrain", "kPDriveVel", DrivetrainConstants.kPDriveVel));
+    setksVolts(Settings.getLiveDouble("DriveTrain", "ks", DrivetrainConstants.ksVolts));
+    setkvVoltSecondsPerMeter(Settings.getLiveDouble("DriveTrain", "kv", DrivetrainConstants.kvVoltSecondsPerMeter));
+    setkaVoltSecondsSquaredPerMeter(Settings.getLiveDouble("DriveTrain", "ka", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
+    setkPDriveVel(Settings.loadDouble("DriveTrain", "kp", DrivetrainConstants.kPDriveVel));
 
     boolean isFlat = (Math.abs(_gyro.getRoll()) <= 5);
     if (!isFlat) {

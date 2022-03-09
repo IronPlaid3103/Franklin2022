@@ -97,12 +97,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new IntakeActuateOut(_intakeActuator));
-    new JoystickButton(_driver, JoystickConstants.LOGO_LEFT).whenPressed(new IntakeActuateIn(_intakeActuator));
-    new JoystickButton(_driver, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
-    new JoystickButton(_driver, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
-    new JoystickButton(_driver, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
-    new JoystickButton(_driver, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
+    // new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new IntakeActuateOut(_intakeActuator));
+    // new JoystickButton(_driver, JoystickConstants.LOGO_LEFT).whenPressed(new IntakeActuateIn(_intakeActuator));
+    // new JoystickButton(_driver, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
+    // new JoystickButton(_driver, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
+    // new JoystickButton(_driver, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
+    // new JoystickButton(_driver, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
     new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new InstantCommand(_camera::toggleCamera, _camera)); 
 
     new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeCargo(_intake, _intakeActuator));
@@ -118,6 +118,7 @@ public class RobotContainer {
     new JoystickButton(_operator, JoystickConstants.LEFT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::toggleSoftLimit, _climberArm));
     new JoystickButton(_operator, JoystickConstants.RIGHT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::encoderReset, _climberArm));
     new XboxPOV(_operator).whenPressed(new IntakeActuateOut(_intakeActuator));
+    //new XboxPOV(_operator).whenPressed(new ClimberAutoClimb(_climberArm, _climberHooks, _intakeActuator));
   }
 
   /**
@@ -134,19 +135,19 @@ public class RobotContainer {
 
   public void loadSettings(){
     _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.intakeMotorPower));
-    _climberArm.setPower(Settings.loadDouble("ClimberArm", "Power", ClimberConstants.climberArmPower));
-    _drive_Train.setksVolts(Settings.loadDouble("DriveTrain", "ksVolts", DrivetrainConstants.ksVolts));
-    _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kvVoltSecondsPerMeter", DrivetrainConstants.kvVoltSecondsPerMeter));
-    _drive_Train.setkaVoltSecondsSquaredPerMeter(Settings.loadDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
-    _drive_Train.setkPDriveVel(Settings.loadDouble("DriveTrain", "kPDriveVel", DrivetrainConstants.kPDriveVel));
+    _climberArm.setPower(Settings.loadDouble("Arm", "Power", ClimberConstants.climberArmPower));
+    _drive_Train.setksVolts(Settings.loadDouble("DriveTrain", "ks", DrivetrainConstants.ksVolts));
+    _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kv", DrivetrainConstants.kvVoltSecondsPerMeter));
+    _drive_Train.setkaVoltSecondsSquaredPerMeter(Settings.loadDouble("DriveTrain", "ka", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
+    _drive_Train.setkPDriveVel(Settings.loadDouble("DriveTrain", "kp", DrivetrainConstants.kPDriveVel));
   }  
 
   public void saveSettings(){
     Settings.saveDouble("Intake", "Power", _intake.getPower());
-    Settings.saveDouble("ClimberArm", "Power", _climberArm.getPower());
-    Settings.saveDouble("DriveTrain", "ksVolts", _drive_Train.getksVolts());
-    Settings.saveDouble("DriveTrain", "kvVoltsSecondsPerMeter", _drive_Train.getkvVoltSecondsPerMeter());
-    Settings.saveDouble("DriveTrain", "kaVoltSecondsSquaredPerMeter", _drive_Train.getkaVoltSecondsSquaredPerMeter());
-    Settings.saveDouble("DriveTrain", "kPDriveVel", _drive_Train.getkPDriveVel()); 
+    Settings.saveDouble("Arm", "Power", _climberArm.getPower());
+    Settings.saveDouble("DriveTrain", "ks", _drive_Train.getksVolts());
+    Settings.saveDouble("DriveTrain", "kv", _drive_Train.getkvVoltSecondsPerMeter());
+    Settings.saveDouble("DriveTrain", "ka", _drive_Train.getkaVoltSecondsSquaredPerMeter());
+    Settings.saveDouble("DriveTrain", "kp", _drive_Train.getkPDriveVel()); 
   }
 }

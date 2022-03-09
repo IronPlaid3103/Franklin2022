@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ClimberArm;
 import frc.robot.subsystems.ClimberHooks;
+import frc.robot.subsystems.IntakeActuator;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ClimberAutoClimb extends SequentialCommandGroup {
   /** Creates a new ClimberAutoClimb. */
-  public ClimberAutoClimb(ClimberArm climberArm, ClimberHooks climberHooks) {
+  public ClimberAutoClimb(ClimberArm climberArm, ClimberHooks climberHooks, IntakeActuator intakeActuator) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -23,6 +24,7 @@ public class ClimberAutoClimb extends SequentialCommandGroup {
         new ClimberArmUp(climberArm),
         new SequentialCommandGroup(
           new WaitCommand(1),
+          new IntakeActuateOut(intakeActuator),
           new ClimberHooksForward(climberHooks)
         )
       ),

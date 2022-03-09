@@ -86,10 +86,11 @@ public class ClimberArm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    _motorPower = Settings.getLiveDouble("ClimberArm", "Power", ClimberConstants.climberArmPower);
+    _motorPower = Settings.getLiveDouble("Arm", "Power", ClimberConstants.climberArmPower);
 
     SmartDashboard.putBoolean("Arm Up", isUp());
     SmartDashboard.putBoolean("Arm Down", isDown());
+    SmartDashboard.putNumber("Arm Position", _encoder.getPosition());
   }
 
   public boolean isDown() {
