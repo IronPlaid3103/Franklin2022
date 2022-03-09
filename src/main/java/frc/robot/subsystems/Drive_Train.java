@@ -125,7 +125,7 @@ public class Drive_Train extends SubsystemBase {
     setkaVoltSecondsSquaredPerMeter(Settings.getLiveDouble("DriveTrain", "ka", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
     setkPDriveVel(Settings.loadDouble("DriveTrain", "kp", DrivetrainConstants.kPDriveVel));
 
-    boolean isFlat = (Math.abs(_gyro.getRoll()) <= 5);
+    boolean isFlat = (Math.abs(_gyro.getPitch()) <= 5);
     if (!isFlat) {
       _led.setColor(Color.kDarkBlue);
     } else {
