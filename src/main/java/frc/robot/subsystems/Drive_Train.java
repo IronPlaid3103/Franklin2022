@@ -69,7 +69,7 @@ public class Drive_Train extends SubsystemBase {
     _bLMotor.follow(_fLMotor);
     _bRMotor.follow(_fRMotor);
 
-    enableOpenLoopRampRate(true);
+    enableOpenLoopRampRate(false);
 
     _leftEncoder = _fLMotor.getEncoder();
     _rightEncoder = _fRMotor.getEncoder();

@@ -140,6 +140,7 @@ public class RobotContainer {
     _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kv", DrivetrainConstants.kvVoltSecondsPerMeter));
     _drive_Train.setkaVoltSecondsSquaredPerMeter(Settings.loadDouble("DriveTrain", "ka", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
     _drive_Train.setkPDriveVel(Settings.loadDouble("DriveTrain", "kp", DrivetrainConstants.kPDriveVel));
+    _climberArm.setLimit(Settings.loadDouble("Arm", "Top Limit", ClimberConstants.REVERSE_LIMIT));
   }  
 
   public void saveSettings(){
@@ -149,5 +150,6 @@ public class RobotContainer {
     Settings.saveDouble("DriveTrain", "kv", _drive_Train.getkvVoltSecondsPerMeter());
     Settings.saveDouble("DriveTrain", "ka", _drive_Train.getkaVoltSecondsSquaredPerMeter());
     Settings.saveDouble("DriveTrain", "kp", _drive_Train.getkPDriveVel()); 
+    Settings.saveDouble("Arm", "Top", _climberArm.getLimit()); 
   }
 }

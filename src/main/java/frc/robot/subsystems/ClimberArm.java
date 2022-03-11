@@ -22,7 +22,8 @@ public class ClimberArm extends SubsystemBase {
   private double _motorPower = ClimberConstants.climberArmPower;
   private RelativeEncoder _encoder = _climberMotor.getEncoder();
   private boolean _softLimitEnabled = false;
-  
+  private float _limit = ClimberConstants.REVERSE_LIMIT;
+
   /** Creates a new ClimberArms. */
   public ClimberArm() {
     _climberMotor.restoreFactoryDefaults();
@@ -42,7 +43,7 @@ public class ClimberArm extends SubsystemBase {
     _climberMotor.enableSoftLimit(SoftLimitDirection.kForward, _softLimitEnabled);
     _climberMotor.setSoftLimit(SoftLimitDirection.kForward, ClimberConstants.FORWARD_LIMIT);
     _climberMotor.enableSoftLimit(SoftLimitDirection.kReverse, _softLimitEnabled);
-    _climberMotor.setSoftLimit(SoftLimitDirection.kReverse, ClimberConstants.REVERSE_LIMIT);
+    _climberMotor.setSoftLimit(SoftLimitDirection.kReverse, _limit); //changed this --- cannot convert double to float
 
     SmartDashboard.putBoolean("Soft Limit", _softLimitEnabled);
   }
@@ -83,6 +84,16 @@ public class ClimberArm extends SubsystemBase {
     return _motorPower;
   }
 
+  public void setLimit(double topLimit) {
+    topLimit = SmartDashboard.getNumber("Top", ClimberConstants.REVERSE_LIMIT); 
+    _limit = (float)topLimit;
+  }
+
+  public float getLimit() {
+    return _limit;
+  }
+  //i made this up
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -98,7 +109,7 @@ public class ClimberArm extends SubsystemBase {
   }
 
   public boolean isUp() {
-    return (_encoder.getPosition() <= ClimberConstants.REVERSE_LIMIT);
+    return (_encoder.getPosition() <= _limit); //i changed this
   }
 
   public boolean isAtPosition(double position) {
