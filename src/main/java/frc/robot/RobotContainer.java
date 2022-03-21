@@ -141,6 +141,8 @@ public class RobotContainer {
     _drive_Train.setkaVoltSecondsSquaredPerMeter(Settings.loadDouble("DriveTrain", "ka", DrivetrainConstants.kaVoltSecondsSquaredPerMeter));
     _drive_Train.setkPDriveVel(Settings.loadDouble("DriveTrain", "kp", DrivetrainConstants.kPDriveVel));
     _climberArm.setLimit(Settings.loadDouble("Arm", "Top Limit", ClimberConstants.REVERSE_LIMIT));
+
+    SmartDashboard.putNumber("Auton Wait", 0);
   }  
 
   public void saveSettings(){
