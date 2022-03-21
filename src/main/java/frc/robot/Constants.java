@@ -82,7 +82,7 @@ public final class Constants {
     public static final class ClimberConstants {
         public static final int climberMotor = 6;
         public static final double climberArmPower = 1.0;
-        public static final int climberSolenoid = 2;
+        public static final int climberSolenoid = 0;
         public static final float FORWARD_LIMIT = 0;
         public static final float REVERSE_LIMIT = -270;
     }

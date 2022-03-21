@@ -130,7 +130,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     String path = _pathChooser.getSelected();
 
-    return new AutonDrivePath(_drive_Train, path);
+    return new AutonDrivePathWithWait(_drive_Train, path);
   }
 
   public void loadSettings(){

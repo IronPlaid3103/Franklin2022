@@ -4,26 +4,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drive_Train;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakeActuator;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonIntake extends SequentialCommandGroup {
-  /** Creates a new AutonIntake. */
-  public AutonIntake(Intake intake, IntakeActuator intakeActuator, Drive_Train drive_Train, String path) {
+public class AutonDrivePathWithWait extends SequentialCommandGroup {
+  /** Creates a new AutonDrivePathWithWait. */
+  public AutonDrivePathWithWait(Drive_Train drive_Train, String path) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IntakeActuateOut(intakeActuator), 
-      new ParallelDeadlineGroup(
-        new AutonDrivePathWithWait(drive_Train, path), 
-        new IntakeIn(intake)
-      )
+      new WaitConfigurable(),
+      new AutonDrivePath(drive_Train, path)
     );
   }
 }

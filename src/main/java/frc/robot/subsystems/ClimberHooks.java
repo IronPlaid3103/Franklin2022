@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberHooks extends SubsystemBase {
-    private final Solenoid _climberSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, ClimberConstants.climberSolenoid);
+    private final Solenoid _climberSolenoid = new Solenoid(PneumaticsModuleType.REVPH, ClimberConstants.climberSolenoid);
 
   /** Creates a new Climber. */
   public ClimberHooks() {}
