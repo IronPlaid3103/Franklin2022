@@ -37,14 +37,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final AHRS _gyro = new AHRS(SPI.Port.kMXP);
-  public final LEDStrip led = new LEDStrip(28, 0);
+  public final LEDStrip led = new LEDStrip(100, 0);
   private final Drive_Train _drive_Train = new Drive_Train(_gyro, led);
   private final Joystick _driver = new Joystick(0);
   private final Joystick _operator = new Joystick(1);
-  private final Intake _intake = new Intake(); 
+  // private final Intake _intake = new Intake(); 
+  // private final IntakeActuator _intakeActuator = new IntakeActuator();
   private final ClimberHooks _climberHooks = new ClimberHooks();
   private final ClimberArm _climberArm = new ClimberArm();
-  private final IntakeActuator _intakeActuator = new IntakeActuator();
   private SendableChooser<String> _pathChooser = new SendableChooser<String>(); 
   private final Camera _camera = new Camera(); 
   
@@ -70,14 +70,16 @@ public class RobotContainer {
     // cacheTrajectory("Right", "paths/output/right.wpilib.json");
     // cacheTrajectory("Middle -> Left", "paths/output/middle_then_left.wpilib.json");
     
-    cacheTrajectory("Middle", "middle", PATHTYPE.PathPlanner);
-    cacheTrajectory("Left", "left", PATHTYPE.PathPlanner);    
-    cacheTrajectory("Right", "right", PATHTYPE.PathPlanner);
-    cacheTrajectory("Middle then Left", "middle then left", PATHTYPE.PathPlanner);
-    cacheTrajectory("Middle then Right", "middle then right", PATHTYPE.PathPlanner);
-    cacheTrajectory("Right then Middle", "right then middle", PATHTYPE.PathPlanner);
-    cacheTrajectory("Test Straight", "test-straight", PATHTYPE.PathPlanner);
-    cacheTrajectory("Another Test", "another-test", PATHTYPE.PathPlanner);
+    cacheTrajectory("Straight Forward", "straight forward", PATHTYPE.PathPlanner);
+    cacheTrajectory("Straight Backward", "straight backward", PATHTYPE.PathPlanner);
+    cacheTrajectory("Cargo - Left", "cargo - left", PATHTYPE.PathPlanner);    
+    cacheTrajectory("Cargo - Middle", "cargo - middle", PATHTYPE.PathPlanner);
+    cacheTrajectory("Cargo - Right", "cargo - right", PATHTYPE.PathPlanner);
+    cacheTrajectory("Cargo - Middle then Left", "cargo - middle then left", PATHTYPE.PathPlanner);
+    cacheTrajectory("Cargo - Middle then Right", "cargo - middle then right", PATHTYPE.PathPlanner);
+    cacheTrajectory("Cargo - Right then Middle", "cargo - right then middle", PATHTYPE.PathPlanner);
+    
+    // cacheTrajectory("Test Straight", "cargo - test-straight", PATHTYPE.PathPlanner);
 
     SmartDashboard.putData("Path Chooser", _pathChooser);
   }
@@ -97,28 +99,33 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    //DRIVER
+    new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new InstantCommand(_camera::toggleCamera, _camera)); 
+
     // new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new IntakeActuateOut(_intakeActuator));
     // new JoystickButton(_driver, JoystickConstants.LOGO_LEFT).whenPressed(new IntakeActuateIn(_intakeActuator));
     // new JoystickButton(_driver, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeIn(_intake));
     // new JoystickButton(_driver, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeOut(_intake));
     // new JoystickButton(_driver, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
     // new JoystickButton(_driver, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
-    new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new InstantCommand(_camera::toggleCamera, _camera)); 
 
-    new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeCargo(_intake, _intakeActuator));
-    new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whenReleased(new IntakeActuateIn(_intakeActuator));
-    new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeIn(_intake));
-    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whileHeld(new VomitCargo(_intake, _intakeActuator));
-    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whenReleased(new IntakeActuateIn(_intakeActuator));
-    new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeOut(_intake));
-   // new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
-   // new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
+    //OPERATOR
     new JoystickButton(_operator, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
     new JoystickButton(_operator, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
     new JoystickButton(_operator, JoystickConstants.LEFT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::toggleSoftLimit, _climberArm));
     new JoystickButton(_operator, JoystickConstants.RIGHT_STICK_BUTTON).whenPressed(new InstantCommand(_climberArm::encoderReset, _climberArm));
-    new XboxPOV(_operator).whenPressed(new IntakeActuateOut(_intakeActuator));
-    //new XboxPOV(_operator).whenPressed(new ClimberAutoClimb(_climberArm, _climberHooks, _intakeActuator));
+
+    // new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
+    // new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
+    // new XboxPOV(_operator).whenPressed(new ClimberAutoClimb(_climberArm, _climberHooks, _intakeActuator));
+
+    // new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whileHeld(new IntakeCargo(_intake, _intakeActuator));
+    // new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whenReleased(new IntakeActuateIn(_intakeActuator));
+    // new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whileHeld(new IntakeIn(_intake));
+    // new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whileHeld(new VomitCargo(_intake, _intakeActuator));
+    // new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whenReleased(new IntakeActuateIn(_intakeActuator));
+    // new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whileHeld(new IntakeOut(_intake));
+    // new XboxPOV(_operator).whenPressed(new IntakeActuateOut(_intakeActuator));
   }
 
   /**
@@ -134,7 +141,7 @@ public class RobotContainer {
   }
 
   public void loadSettings(){
-    _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.intakeMotorPower));
+    // _intake.setPower(Settings.loadDouble("Intake", "Power", IntakeConstants.intakeMotorPower));
     _climberArm.setPower(Settings.loadDouble("Arm", "Power", ClimberConstants.climberArmPower));
     _drive_Train.setksVolts(Settings.loadDouble("DriveTrain", "ks", DrivetrainConstants.ksVolts));
     _drive_Train.setkvVoltSecondsPerMeter(Settings.loadDouble("DriveTrain", "kv", DrivetrainConstants.kvVoltSecondsPerMeter));
@@ -146,7 +153,7 @@ public class RobotContainer {
   }  
 
   public void saveSettings(){
-    Settings.saveDouble("Intake", "Power", _intake.getPower());
+    // Settings.saveDouble("Intake", "Power", _intake.getPower());
     Settings.saveDouble("Arm", "Power", _climberArm.getPower());
     Settings.saveDouble("DriveTrain", "ks", _drive_Train.getksVolts());
     Settings.saveDouble("DriveTrain", "kv", _drive_Train.getkvVoltSecondsPerMeter());
