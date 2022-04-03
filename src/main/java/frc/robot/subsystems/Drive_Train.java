@@ -69,7 +69,7 @@ public class Drive_Train extends SubsystemBase {
     _bLMotor.follow(_fLMotor);
     _bRMotor.follow(_fRMotor);
 
-    enableOpenLoopRampRate(false);
+    enableOpenLoopRampRate(true);
 
     _leftEncoder = _fLMotor.getEncoder();
     _rightEncoder = _fRMotor.getEncoder();
@@ -102,7 +102,7 @@ public class Drive_Train extends SubsystemBase {
     double forward = applyDeadband(driveControl.getRawAxis(JoystickConstants.LEFT_STICK_Y));
     double turn = applyDeadband(driveControl.getRawAxis(JoystickConstants.RIGHT_STICK_X));
 
-    _drive.arcadeDrive(forward, -turn);
+    _drive.arcadeDrive(forward, -0.75 * turn);
   }
 
   private double applyDeadband(double value) {

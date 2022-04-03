@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.ClimberHooks;
 import frc.robot.subsystems.Drive_Train;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeActuator;
@@ -15,13 +16,13 @@ import frc.robot.subsystems.IntakeActuator;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutonIntake extends SequentialCommandGroup {
   /** Creates a new AutonIntake. */
-  public AutonIntake(Intake intake, IntakeActuator intakeActuator, Drive_Train drive_Train, String path) {
+  public AutonIntake(Intake intake, IntakeActuator intakeActuator, Drive_Train drive_Train, String path, ClimberHooks climberHooks) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new IntakeActuateOut(intakeActuator), 
       new ParallelDeadlineGroup(
-        new AutonDrivePathWithWait(drive_Train, path), 
+        new AutonDrivePathWithWait(drive_Train, path, climberHooks), 
         new IntakeIn(intake)
       )
     );

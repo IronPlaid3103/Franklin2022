@@ -102,6 +102,8 @@ public class ClimberArm extends SubsystemBase {
     SmartDashboard.putBoolean("Arm Up", isUp());
     SmartDashboard.putBoolean("Arm Down", isDown());
     SmartDashboard.putNumber("Arm Position", _encoder.getPosition());
+
+    SmartDashboard.putNumber("Arm Current", _climberMotor.getOutputCurrent());
   }
 
   public boolean isDown() {

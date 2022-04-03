@@ -101,6 +101,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     //DRIVER
     new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new InstantCommand(_camera::toggleCamera, _camera)); 
+    new JoystickButton(_driver, JoystickConstants.BUMPER_RIGHT).whenPressed(new InstantCommand(_camera::toggleCamera, _camera)); 
 
     // new JoystickButton(_driver, JoystickConstants.BUMPER_LEFT).whenPressed(new IntakeActuateOut(_intakeActuator));
     // new JoystickButton(_driver, JoystickConstants.LOGO_LEFT).whenPressed(new IntakeActuateIn(_intakeActuator));
@@ -110,10 +111,14 @@ public class RobotContainer {
     // new JoystickButton(_driver, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
 
     //OPERATOR
-    new JoystickButton(_operator, JoystickConstants.X).whenPressed(new ClimberHooksForward(_climberHooks));
-    new JoystickButton(_operator, JoystickConstants.B).whenPressed(new ClimberHooksBack(_climberHooks));
+    new JoystickButton(_operator, JoystickConstants.B).whenPressed(new ClimberHooksForward(_climberHooks));
+    new JoystickButton(_operator, JoystickConstants.X).whenPressed(new ClimberHooksBack(_climberHooks));
     new JoystickButton(_operator, JoystickConstants.LOGO_LEFT).whenPressed(new InstantCommand(_climberArm::toggleSoftLimit, _climberArm));
     new JoystickButton(_operator, JoystickConstants.LOGO_RIGHT).whenPressed(new InstantCommand(_climberArm::encoderReset, _climberArm));
+
+    new JoystickButton(_operator, JoystickConstants.BUMPER_LEFT).whenPressed(new InstantCommand(_camera::toggleCamera, _camera)); 
+    new JoystickButton(_operator, JoystickConstants.BUMPER_RIGHT).whenPressed(new InstantCommand(_camera::toggleCamera, _camera)); 
+
 
     // new JoystickButton(_operator, JoystickConstants.A).whileHeld(new ClimberArmDown(_climberArm));
     // new JoystickButton(_operator, JoystickConstants.Y).whileHeld(new ClimberArmUp(_climberArm));
@@ -137,7 +142,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     String path = _pathChooser.getSelected();
 
-    return new AutonDrivePathWithWait(_drive_Train, path);
+    return new AutonDrivePathWithWait(_drive_Train, path, _climberHooks);
   }
 
   public void loadSettings(){
